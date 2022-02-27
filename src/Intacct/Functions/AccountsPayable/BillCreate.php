@@ -88,6 +88,8 @@ class BillCreate extends AbstractBill
 
         $this->writeXmlExplicitCustomFields($xml);
 
+        $xml->writeElement('taxsolutionid', $this->getTaxSolutionId());
+
         $xml->startElement('billitems');
         if (count($this->getLines()) > 0) {
             foreach ($this->getLines() as $line) {
@@ -101,5 +103,6 @@ class BillCreate extends AbstractBill
         $xml->endElement(); //create_bill
 
         $xml->endElement(); //function
+
     }
 }

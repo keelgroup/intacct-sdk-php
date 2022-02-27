@@ -95,6 +95,9 @@ abstract class AbstractBill extends AbstractFunction
     /** @var AbstractBillLine[] */
     protected $lines = [];
 
+    /** @var string */
+    protected $taxSolutionId;
+
     /**
      * Get record number
      *
@@ -553,6 +556,22 @@ abstract class AbstractBill extends AbstractFunction
     public function setLines($lines)
     {
         $this->lines = $lines;
+    }
+
+        /**
+     * @return string
+     */
+    public function getTaxSolutionId()
+    {
+        return $this->taxSolutionId;
+    }
+
+    /**
+     * @param string $taxSolutionId
+     */
+    public function setTaxSolutionId(string $taxSolutionId)
+    {
+        $this->taxSolutionId = $taxSolutionId;
     }
 
     /**
