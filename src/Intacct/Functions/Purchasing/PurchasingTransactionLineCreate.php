@@ -53,6 +53,31 @@ class PurchasingTransactionLineCreate extends AbstractPurchasingTransactionLine
             $xml->endElement(); //itemdetails
         }
 
+        if ($this->getOverrideTaxAmount())
+        {
+            $xml->startElement('linesubtotals');
+                $xml->startElement('linesubtotal');
+                    $xml->writeElement('trx_tax', $this->getTax());
+
+                    
+                    if (round($this->getTax() / $this->getPrice(),2) == 0.15)
+                    {
+                        $xml->writeElement('overridedetailid', 'HST Standard Rate Goods Purchase - CA');                    
+                    }
+                    elseif ($this->getTax() > 0)
+                    {
+                        $xml->writeElement('overridedetailid', 'HST Standard Rate Services Purchase - CA');    
+                    }
+                    else
+                    {
+                        $xml->writeElement('overridedetailid', 'Zero Rate Services Purchase - CA');    
+                    }
+                        
+                        
+                $xml->endElement(); //linesubtotal
+            $xml->endElement(); //linesubtotals
+        }
+
         $xml->writeElement('form1099', $this->isForm1099());
 
         $this->writeXmlExplicitCustomFields($xml);
